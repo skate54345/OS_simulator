@@ -22,10 +22,11 @@ int main(int argc, char **argv)
   char io_cycle_time[10];
   char log_to[10];
   char log_file_path[100];
+  char finalCycleChar;
   int  error_code = 0;
+  int ending_row;
 
   struct NodeType *headPtr = NULL;
-  struct NodeType *workingPtr = NULL;
   // data node created, must be released
   struct NodeType *dataPtr
                   = ( struct NodeType * )malloc( sizeof( struct NodeType ) );
@@ -126,13 +127,13 @@ int main(int argc, char **argv)
           fscanf(meta_data_file, "%1s", meta_data_buffer);
           //dump data
 
-          //separate matrix for convenience
+          //fill separate matrix for convenience
           meta_data_matrix[row][col] = dataPtr->component_letter;
           meta_data_matrix[row][col+1] = dataPtr->operation_string;
           meta_data_matrix[row][col+2] = dataPtr->cycle_time;
+          //printf(dataPtr->cycle_time[0];
+          ending_row = row;
 
-          ++row;
-          col=0;
 
           printf("The data item component letter is: %s\n",
                                            dataPtr->component_letter);
@@ -140,19 +141,24 @@ int main(int argc, char **argv)
                                            dataPtr->operation_string);
           printf("The data item cycle time is      : %s\n",
                                            dataPtr->cycle_time);
+
+          ++row;
+          col=0;
           headPtr = addNode( headPtr, dataPtr );
           dataPtr = headPtr;
+
           printf("\n");
           //fixes issue where var shows on next line by checking per character
           fgetc(meta_data_file);
 
-          // printf("meta data: %s \n",meta_data_matrix[row][col]);
-          // printf("meta data: %s \n",meta_data_matrix[row][col+1]);
-          // printf("meta data: %s \n",meta_data_matrix[row][col+2]);
         }
-    //  headPtr = clearList( headPtr );
-      //
-      printf("%s\n",meta_data_matrix[0][1]);
+
+      //printf("%d  \n",ending_row);
+      //printf("%s  \n",meta_data_matrix[ending_row][2]);
+
+      //HOW TO PRINT FIRST CHAR
+      finalCycleChar = dataPtr->cycle_time[0];
+      printf("%d\n",finalCycleChar);
 
       fclose(meta_data_file);
     }
