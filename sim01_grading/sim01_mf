@@ -1,0 +1,18 @@
+CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+
+sim01 : maintest.o pmdlist.o configparse.o
+	$(CC) $(LFLAGS) maintest.o pmdlist.o configparse.o -o sim01
+
+pmdlist.o : pmdlist.c pmdlist.h
+	$(CC) $(CFLAGS) pmdlist.c
+
+configparse.o : configparse.c configparse.h
+	$(CC) $(CFLAGS) configparse.c
+
+maintest.o : maintest.c
+	$(CC) $(CFLAGS) maintest.c
+clean:
+	rm *.o sim01

@@ -1,0 +1,21 @@
+CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+
+ll_prog : maintest.o linkedlist.o
+	$(CC) $(LFLAGS) maintest.o linkedlist.o -o ll_prog
+
+maintest.o : maintest.c
+	$(CC) $(CFLAGS) maintest.c
+
+linkedlist.o : linkedlist.c linkedlist.h
+	$(CC) $(CFLAGS) linkedlist.c
+
+clean:
+	\rm *.o ll_prog
+
+
+
+SDSSDS
+make: main.c linkedlist.c -I  $gcc -o sim01 main.c linkedlist.c $./sim01
