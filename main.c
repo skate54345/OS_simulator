@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include "linkedlist.h"
 #include "functions.h"
+#include "simtimer.h"
+#include "sim02_functions.h"
+
+//try to fix this
+#include "sim02_functions.c"
+
 
 int main(int argc, char **argv)
 {
@@ -25,6 +31,12 @@ int main(int argc, char **argv)
   char finalCycleChar;
   int  error_code = 0;
   int ending_row;
+
+  char timeArray[20];
+  double startTime;
+  double endTime;
+  int procIteration = 0;
+  struct process firstProc;
 
   struct NodeType *headPtr = NULL;
   // data node created, must be released
@@ -85,6 +97,7 @@ int main(int argc, char **argv)
     exit(0);
   }
 
+/* sim01 print statements ////////////////////////////////////////////////
   printf("\nConfig File Dump \n================\n");
   printf("Version                  : %s \n", version);
   printf("File Path                : %s \n", file_path);
@@ -95,23 +108,29 @@ int main(int argc, char **argv)
   printf("I/O Cycle Time           : %s \n", io_cycle_time);
   printf("Log to                   : %s \n", log_to);
   printf("Log File Path            : %s \n\n", log_file_path);
+*/////////////////////////////////////////////////////////////////////////
 
 
     //starts the meta data scan
     meta_data_file = fopen(file_path,"r");
     int row = 0;
     int col = 0;
+
     if (!meta_data_file)
     {
       printf("'%s' not found\nExiting program\n", file_path);
       return 0;
     }
+
     else
     {
       getMetaData(meta_data_file);
-      printf("Meta Data File Dump \n=============\n");
+/* sim01 print statement /////////////////////////////////////////////////
+      printf("Meta Data File Dump \n===================\n");
+*/////////////////////////////////////////////////////////////////////////
       while (feof(meta_data_file)==0) //until the end of file
         {
+
           //scan until '(' and stores in pointers component letter
           fscanf(meta_data_file, "%[^(]s", dataPtr->component_letter);
           //skips next char '('
@@ -134,31 +153,85 @@ int main(int argc, char **argv)
           //printf(dataPtr->cycle_time[0];
           ending_row = row;
 
-
+/* sim01 print statements ////////////////////////////////////////////////
+          //dump
           printf("The data item component letter is: %s\n",
                                            dataPtr->component_letter);
           printf("The data item operation string is: %s\n",
                                            dataPtr->operation_string);
           printf("The data item cycle time is      : %s\n",
                                            dataPtr->cycle_time);
+*/ ///////////////////////////////////////////////////////////////////////
 
           ++row;
           col=0;
           headPtr = addNode( headPtr, dataPtr );
           dataPtr = headPtr;
 
-          printf("\n");
+          //printf("\n");
           //fixes issue where var shows on next line by checking per character
           fgetc(meta_data_file);
-
         }
+
+
+
+/*SIM02 START*/
+
+      //get ZERO_TIMER
+      startTime = accessTimer(0,timeArray); //start
+      printf("Time:  %f, System Start\n", startTime);
+      endTime = accessTimer(1,timeArray); //stop
+      printf("Time:  %f, OS: Begin PCB Creation\n", endTime);
+
+
+      for(row = 0; row<ending_row; row++)
+      {
+        //start
+        if(*meta_data_matrix[row][0] == 'A' &&
+                          *meta_data_matrix[row][1] == 's')
+        {
+          endTime = accessTimer(1,timeArray);
+          printf("Time:  %f, OS: FCFS-N Strategy selects Process %d "\
+                          "with time: %s mSec\n", endTime, procIteration,
+                          processor_cycle_time);
+
+          endTime = accessTimer(1,timeArray);
+          printf("Time:  %f, OS: Process %d Set in Running State\n", endTime,
+                          procIteration);
+          //createProcess(procIteration, firstProc, meta_data_matrix);
+        }
+        else if(*meta_data_matrix[row][0] != 'A')
+        {
+          //if()
+          endTime = accessTimer(1,timeArray);
+          printf("Time:  %f, Process %d Something else\n", endTime,
+                          procIteration);
+        }
+
+        //exit
+        else if(*meta_data_matrix[row][0] == 'A' &&
+                          *meta_data_matrix[row][1] == 'e')
+        {
+          endTime = accessTimer(1,timeArray);
+          printf("Time:  %f, OS: Process %d Set in Exit State\n", endTime,
+                          procIteration);
+          procIteration++;
+        }
+
+
+      }
+      procIteration = 0; //reset iterator
+
+      //startProcess(*processor_cycle_time, *io_cycle_time, ));
+
+      //printf("%f\n",startProcess(*processor_cycle_time, *io_cycle_time));
 
       //printf("%d  \n",ending_row);
       //printf("%s  \n",meta_data_matrix[ending_row][2]);
 
-      //HOW TO PRINT FIRST CHAR
+      //HOW TO PRINT FIRST CHAR (for last cycle time entry)
       finalCycleChar = dataPtr->cycle_time[0];
-      printf("%d\n",finalCycleChar);
+      //printf("%d\n",finalCycleChar);
 
       fclose(meta_data_file);
     }

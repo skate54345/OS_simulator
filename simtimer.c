@@ -1,9 +1,9 @@
 // Program Information ////////////////////////////////////////////////////////
 /**
  * @file SimpleTimer.c
- * 
+ *
  * @brief Implementation file for using a timer with micro-second precision
- * 
+ *
  * @author Michael Leverington
  *
  * @details Implements member methods for timing
@@ -11,9 +11,9 @@
  * @version 3.00 (02 February 2017) Update to simulator timer
             2.00 (13 January 2017) Update to C language
  *          1.00 (11 September 2015)
- *          
+ *
  * @Note Requires SimpleTimer.h.
- * 
+ *
  */
 
 // Precompiler directives /////////////////////////////////////////////////////
@@ -36,7 +36,7 @@ void runTimer( int milliSeconds )
     int uSecDiff, mSecDiff, secDiff, timeDiff;
 
     gettimeofday( &startTime, NULL );
- 
+
     startSec = startTime.tv_sec;
     startUSec = startTime.tv_usec;
 
@@ -65,7 +65,7 @@ void runTimer( int milliSeconds )
 
 double accessTimer( int controlCode, char *timeStr )
    {
-    static Boolean running = False;
+    static int running = 0;
     static int startSec = 0, endSec = 0, startUSec = 0, endUSec = 0;
     static int lapSec = 0, lapUSec = 0;
     struct timeval startData, lapData, endData;
@@ -75,7 +75,7 @@ double accessTimer( int controlCode, char *timeStr )
        {
         case ZERO_TIMER:
            gettimeofday( &startData, NULL );
-           running = True;
+           running = 1;
 
            startSec = startData.tv_sec;
            startUSec = startData.tv_usec;
@@ -84,18 +84,18 @@ double accessTimer( int controlCode, char *timeStr )
            lapSec = 0.000000000;
            lapUSec = 0.000000000;
 
-           timeToString( lapSec, lapUSec, timeStr ); 
+           timeToString( lapSec, lapUSec, timeStr );
            break;
-           
+
         case LAP_TIMER:
-           if( running == True )
+           if( running == 1 )
               {
                gettimeofday( &lapData, NULL );
 
                lapSec = lapData.tv_sec;
                lapUSec = lapData.tv_usec;
 
-               fpTime = processTime( startSec, lapSec, 
+               fpTime = processTime( startSec, lapSec,
                                                  startUSec, lapUSec, timeStr );
               }
 
@@ -106,15 +106,15 @@ double accessTimer( int controlCode, char *timeStr )
            break;
 
         case STOP_TIMER:
-           if( running == True )
+           if( running == 1 )
               {
                gettimeofday( &endData, NULL );
-               running = False;
+               running = 0;
 
                endSec = endData.tv_sec;
                endUSec = endData.tv_usec;
 
-               fpTime = processTime( startSec, endSec, 
+               fpTime = processTime( startSec, endSec,
                                                  startUSec, endUSec, timeStr );
               }
 
@@ -129,7 +129,7 @@ double accessTimer( int controlCode, char *timeStr )
     return fpTime;
    }
 
-double processTime( double startSec, double endSec, 
+double processTime( double startSec, double endSec,
                            double startUSec, double endUSec, char *timeStr )
    {
     double secDiff = endSec - startSec;
@@ -166,7 +166,7 @@ void timeToString( int secTime, int uSecTime, char *timeStr )
         uSecTime /= 10;
 
         index++;
-        
+
        }
 
     while( index < 6 )
@@ -196,7 +196,7 @@ void timeToString( int secTime, int uSecTime, char *timeStr )
     if( secTime == 0 )
        {
         timeStr[ index ] = '0';
-    
+
         index++;
        }
 */
@@ -209,7 +209,7 @@ void timeToString( int secTime, int uSecTime, char *timeStr )
         index++;
        }
 
-    timeStr[ index ] = NULL_CHAR;
+    timeStr[ index ] = '\0';
 
     low = 0; high = index - 1;
 
@@ -224,8 +224,3 @@ void timeToString( int secTime, int uSecTime, char *timeStr )
    }
 
 #endif // ifndef SIMTIMER_C
-
-
-
-
-

@@ -3,11 +3,11 @@ DEBUG = -g
 CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
 
-sim01 : main.o
-	$(CC) $(LFLAGS) main.o -o sim01
+sim02 : main.o
+	$(CC) $(LFLAGS) main.o -o sim02
 
 main.o : main.c
 	$(CC) $(CFLAGS) main.c
 
 clean:
-	\rm *.o sim01
+	\rm *.o sim02
