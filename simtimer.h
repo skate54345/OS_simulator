@@ -1,5 +1,7 @@
 // Program Information ////////////////////////////////////////////////////////
 /**
+ * Modified code from example provided by Dr. Leverington
+
  * @file SimpleTimer.h
  *
  * @brief Header file for micro-second precision timer
