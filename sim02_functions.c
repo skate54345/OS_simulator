@@ -57,16 +57,29 @@ void addToPCB(struct process proc)
 }
 
 
-
-void threadReturn()
+int changeThreadState(state, new_state)
 {
-
+  state = new_state;
+  return state;
 }
+
+
+void *threadEnd()
+{
+  return NULL;
+}
+
+void threadStart()
+{
+  //printf("start\n");
+}
+
 
 void createThread()
 {
+  //TODO WAIT FOR DESIRED TIME
   pthread_t threadID;
-  pthread_create(&threadID, NULL, *threadReturn, NULL);
+  pthread_create(&threadID, NULL, *threadEnd, NULL);
   pthread_join(threadID, NULL);
 }
 
@@ -85,9 +98,6 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
 {
   char location_var[20];
   char type_var[10];
-  char start_or_end[10] = {'s','t','a','r','t','\0'};
-  //char hdd[100] = "hard drive";
-  char return_string[100];
   if(location == 'h')
   {
     //stringCopy(hdd, location_var);
@@ -104,6 +114,12 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
   else if(location == 'k')
   {
     char location_var[20] = {'k','e','y','b','o','a','r','d','\0'};
+    location_var[20] = location_var[20];
+  }
+
+  else if(location == 'm')
+  {
+    char location_var[20] = {'m','o','n','i','t','o','r','\0'};
     location_var[20] = location_var[20];
   }
 
@@ -133,7 +149,6 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
 
 //TODO run timer and start thread
   //printf("%d\n", (stringToInt(io_cycle_time))*(total_io_time));
-  //runTimer((stringToInt(io_cycle_time))*(total_io_time));
 
 
   endTime = accessTimer(1,timeArray);
@@ -144,7 +159,7 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
   }
 
   addSubProc(procIteration);
-  createThread();
+  //createThread();
 }
 
 

@@ -26,6 +26,7 @@ int main(int argc, char **argv)
   char io_cycle_time[10];
   char log_to[10];
   char log_file_path[100];
+  int process_state = 0;//wait
   //char finalCycleChar;
   int  error_code = 0;
   int ending_row;
@@ -192,6 +193,7 @@ int main(int argc, char **argv)
       }
 
       //FCFS-N
+      process_state = changeThreadState('W','R');
       for(row = 0; row<ending_row; row++)
       {
         //printf("%c\n", *meta_data_matrix[row][0]);
@@ -220,7 +222,7 @@ int main(int argc, char **argv)
         {
         //this one works stringToInt(processor_cycle_time)*(stringToInt(meta_data_matrix[row][2]));
           total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[row][2]);
-          total_io_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[row][2]);
+          total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[row][2]);
           char location = *meta_data_matrix[row][1];
           char type = *meta_data_matrix[row][0];
           //printf("%c\n",location);
@@ -249,16 +251,22 @@ int main(int argc, char **argv)
               {
                 printf("Time:  %f, Process %d run operation start\n", endTime,
                                procIteration);
+                printf("Time:  %f, Process %d run operation end\n", endTime,
+                               procIteration);
               }
             }
           }
           else //io process
           {
-            createThread();
             startIOProcess(io_cycle_time, log_to, location, type, total_io_time,
                               timeArray, endTime, procIteration);
             char start[20] = {'s','t','a','r','t','\0'};
             printf("start\n");
+            runTimer(total_io_time);
+            createThread();
+            startIOProcess(io_cycle_time, log_to, location, type, total_io_time,
+                              timeArray, endTime, procIteration);
+            printf("end\n");
           }
         }
 
