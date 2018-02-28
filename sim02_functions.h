@@ -12,19 +12,27 @@ typedef struct process
 {
   char processName;
   int processNumber;
+  int subProcID;
   char processState;
 } process;
 
+
+void createThread();
+
 void stringCopy(char *source, char* destination);
+
+void addSubProc(int processNum);
 
 struct process createProcess(int processNum, struct process proc,
                              char *meta_data_matrix);
 
 double startProcess(char processor_cycle_time, char io_cycle_time);
 
-int startIOProcess(char *io_cycle_time, char location, char type,
+void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
                   int total_io_time,  char *timeArray, double endTime,
                   int procIteration);
+
+int createSubProcID(int procIteration);
 
 void returnTimer();
 

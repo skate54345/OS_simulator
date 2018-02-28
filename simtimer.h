@@ -26,6 +26,7 @@
 #include <sys/time.h>
 #include <string.h>
 #include <math.h>
+#include "sim02_functions.h"
 //#include "main.c"
 
 // Global Constants  //////////////////////////////////////////////////////////

@@ -9,9 +9,6 @@
 #include "simtimer.h"
 #include "sim02_functions.h"
 
-//try to fix this
-#include "sim02_functions.c"
-
 
 int main(int argc, char **argv)
 {
@@ -169,21 +166,30 @@ int main(int argc, char **argv)
           col=0;
           headPtr = addNode( headPtr, dataPtr );
           dataPtr = headPtr;
-
-          //printf("\n");
           //fixes issue where var shows on next line by checking per character
           fgetc(meta_data_file);
         }
-
 
 
 /*SIM02 START*/
 
       //get ZERO_TIMER
       startTime = accessTimer(0,timeArray); //start
-      printf("Time:  %f, System Start\n", startTime);
+      //make sure not logged only to file ('F') before printing
+      if(log_to[0] != 'F') //if set to 'File'
+      {
+        printf("Time:  %f, System Start\n", startTime);
+      }
+      else
+      {
+        printf("Writing to file...\n");
+      }
+
       endTime = accessTimer(1,timeArray); //stop
-      printf("Time:  %f, OS: Begin PCB Creation\n", endTime);
+      if(log_to[0] != 'F')
+      {
+        printf("Time:  %f, OS: Begin PCB Creation\n", endTime);
+      }
 
       //FCFS-N
       for(row = 0; row<ending_row; row++)
@@ -194,13 +200,19 @@ int main(int argc, char **argv)
                           && *meta_data_matrix[row][1] == 's')
         {
           endTime = accessTimer(1,timeArray);
-          printf("Time:  %f, OS: FCFS-N Strategy selects Process %d "\
-                          "with time: %s mSec\n", endTime, procIteration,
-                          processor_cycle_time);
+          if(log_to[0] != 'F')
+          {
+            printf("Time:  %f, OS: FCFS-N Strategy selects Process %d "\
+                            "with time: %s mSec\n", endTime, procIteration,
+                            processor_cycle_time);
+          }
 
           endTime = accessTimer(1,timeArray);
-          printf("Time:  %f, OS: Process %d Set in Running State\n", endTime,
-                          procIteration);
+          if(log_to[0] != 'F')
+          {
+            printf("Time:  %f, OS: Process %d Set in Running State\n", endTime,
+                            procIteration);
+          }
           //createProcess(procIteration, firstProc, meta_data_matrix);
         }
 
@@ -217,25 +229,36 @@ int main(int argc, char **argv)
           {
             if(*meta_data_matrix[row][0] == 'M' && row != 0) //memory
             {
-              //blank for now
-              printf("Time:  %f, Process %d Memory management allocate action"\
-                          " start\n", endTime, procIteration);
-              printf("Time:  %f, Process %d Memory management allocate action"\
-                          " end\n", endTime, procIteration);
+              //blank for this project
+              if(*log_to == 'M' || *log_to == 'B')
+              {
+                if(log_to[0] != 'F')
+                {
+                  printf("Time:  %f, Process %d Memory management allocate action"\
+                              " start\n", endTime, procIteration);
+                  printf("Time:  %f, Process %d Memory management allocate action"\
+                              " end\n", endTime, procIteration);
+                }
+              }
             }
             else
             {
               runTimer(total_time);
               endTime = accessTimer(1,timeArray);
-              printf("Time:  %f, Process %d Something else (NOT IO)\n", endTime,
-                             procIteration);
+              if(log_to[0] != 'F')
+              {
+                printf("Time:  %f, Process %d run operation start\n", endTime,
+                               procIteration);
+              }
             }
           }
           else //io process
           {
-            startIOProcess(io_cycle_time, location, type, total_io_time,
-                          timeArray, endTime, procIteration);
             createThread();
+            startIOProcess(io_cycle_time, log_to, location, type, total_io_time,
+                              timeArray, endTime, procIteration);
+            char start[20] = {'s','t','a','r','t','\0'};
+            printf("start\n");
           }
         }
 
@@ -244,8 +267,11 @@ int main(int argc, char **argv)
                           *meta_data_matrix[row][1] == 'e')
         {
           endTime = accessTimer(1, timeArray);
-          printf("Time:  %f, OS: Process %d Set in Exit State\n", endTime,
-                          procIteration);
+          if(log_to[0] != 'F')
+          {
+            printf("Time:  %f, OS: Process %d Set in Exit State\n", endTime,
+                            procIteration);
+          }
           procIteration++;
         //  addProcess(procIteration, "Running", struct process proc,
           //                  meta_data_matrix);
@@ -255,7 +281,10 @@ int main(int argc, char **argv)
         }
       }
       endTime = accessTimer(1,timeArray);
-      printf("Time:  %f, System Stop\n", endTime);
+      if(log_to[0] != 'F')
+      {
+        printf("Time:  %f, System Stop\n", endTime);
+      }
       procIteration = 0; //reset iterator
 
       //startProcess(*processor_cycle_time, *io_cycle_time, ));
@@ -272,6 +301,5 @@ int main(int argc, char **argv)
       fclose(meta_data_file);
     }
 }
-
 
 #endif   // MAIN_C

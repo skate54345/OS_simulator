@@ -3,7 +3,7 @@
 #include "sim02_functions.h"
 #include "simtimer.h"
 #define word_size 50
-#include "simtimer.c"
+#include "pthread.h"
 
 //#include "simtimer.c"
 #ifndef SIM02_FUNCTIONS_C
@@ -33,33 +33,53 @@ void stringCopy(char* source, char *destination)
   }
 }
 
-void addProcess(int processNum, char processState,
-                             char *meta_data_matrix)
-{
-  //struct process proc;
 
-  //proc.processState = "Running";
-  //proc.processNumber = processNum;
+void addSubProc(int processNum)
+{
+  struct process proc;
+  proc.processState = 'R'; //running
+  proc.processNumber = processNum;
+  proc.subProcID = createSubProcID(processNum);
+  //int *subIterationPtr;
   //addToPCB(proc);
 }
 
-void addToPCB(int processNum, char procArray, struct process proc)
+void addToPCB(struct process proc)
 {
-  //char procArray [200];
-  //int iterator = 0;
+  // int *subIterationPtr,
+  // struct process subProcArray[200];
+  // //set pointer array index of pointer to proc
+  // subProcArray[subIterationPtr] = proc;
+  // subIterationPtr++;
+  // printf("s\n", subProcArray[0].processState);
   //for (iterator;iterator<)
   //return procArray;
 }
 
 
+
+void threadReturn()
+{
+
+}
+
 void createThread()
 {
-  //pthread_create(threadID ,NULL, *startIOProcess);
+  pthread_t threadID;
+  pthread_create(&threadID, NULL, *threadReturn, NULL);
+  pthread_join(threadID, NULL);
+}
+
+
+int createSubProcID(int procIteration)
+{
+  int newID = procIteration + rand() %10000;
+  return newID;
 }
 
 
 //TODO
-int startIOProcess(char *io_cycle_time, char location, char type,
+void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
                   int total_io_time,  char *timeArray, double endTime,
                   int procIteration)
 {
@@ -72,16 +92,19 @@ int startIOProcess(char *io_cycle_time, char location, char type,
   {
     //stringCopy(hdd, location_var);
     char location_var[20] = {'h','a','r','d',' ','d','r','i','v','e','\0'};
-
+    //for some reason needs this to suppress "unused" warning even though it is
+    location_var[20] = location_var[20];
   }
   else if(location == 'p')
   {
     char location_var[20] = {'p','r','i','n','t','e','r','\0'};
+    location_var[20] = location_var[20];
   }
 
   else if(location == 'k')
   {
     char location_var[20] = {'k','e','y','b','o','a','r','d','\0'};
+    location_var[20] = location_var[20];
   }
 
 
@@ -107,17 +130,21 @@ int startIOProcess(char *io_cycle_time, char location, char type,
   }
 
 
+
 //TODO run timer and start thread
   //printf("%d\n", (stringToInt(io_cycle_time))*(total_io_time));
   //runTimer((stringToInt(io_cycle_time))*(total_io_time));
+
+
   endTime = accessTimer(1,timeArray);
-  printf("Time:  %f, Process %d %s %s %s\n", endTime, procIteration,
-                  location_var, type_var, start_or_end);
+  if (log_to[0] != 'F')
+  {
+    printf("Time:  %f, Process %d %s %s ", endTime, procIteration,
+                    location_var, type_var);
+  }
 
+  addSubProc(procIteration);
   createThread();
-
-  //use this to confirm the process is finished before moving on
-  return 1;
 }
 
 
