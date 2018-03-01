@@ -1,0 +1,16 @@
+CC = gcc -pthread
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+
+sim02 : main.o sim02_functions.o simtimer.o
+	$(CC) $(LFLAGS) main.o sim02_functions.o simtimer.o -o sim02
+
+sim02_functions.o : sim02_functions.c sim02_functions.h
+	$(CC) $(CFLAGS) sim02_functions.c
+
+main.o : main.c
+	$(CC) $(CFLAGS) main.c
+
+clean:
+	\rm *.o sim02
