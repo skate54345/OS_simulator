@@ -32,7 +32,7 @@ void *threadEnd()
 void createThread()
 {
   pthread_t threadID;
-  pthread_create(&threadID, NULL, *threadEnd, NULL);
+  pthread_create(&threadID, NULL, threadEnd, NULL);
   pthread_join(threadID, NULL);
 }
 
