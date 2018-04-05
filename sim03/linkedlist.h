@@ -27,6 +27,7 @@ struct NodeType
     char component_letter[40];
     char operation_string[40];
     char cycle_time[40];
+    int process_num[40];
     char end[20];
     char name[ 60 ]; // hard-coded STD_STR_LEN since it is not declared yet
     int idNum;

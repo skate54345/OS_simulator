@@ -191,4 +191,4 @@ void getMetaData(FILE *meta_data_file)
 }
 
 
-#endif // FUNCTIONS_H
+#endif   // FUNCTIONS_H

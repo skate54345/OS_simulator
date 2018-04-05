@@ -18,7 +18,8 @@ int main(int argc, char **argv)
   FILE *config_file;
   FILE *meta_data_file;
   FILE *log_file;
-  char *meta_data_matrix[1000][1000];
+  char *meta_data_matrix[1000][1000]; //main matrix for meta data
+
 
   char version[20];
   char file_path[100];
@@ -148,7 +149,7 @@ int main(int argc, char **argv)
           fscanf(meta_data_file, "%1s", meta_data_buffer);
           //dump data
 
-          //fill separate matrix for convenience
+          //fill matrix with old linked list for easier use in sim02
           meta_data_matrix[row][col] = dataPtr->component_letter;
           meta_data_matrix[row][col+1] = dataPtr->operation_string;
           meta_data_matrix[row][col+2] = dataPtr->cycle_time;
@@ -164,7 +165,6 @@ int main(int argc, char **argv)
           printf("The data item cycle time is      : %s\n",
                                            dataPtr->cycle_time);
 */ ///////////////////////////////////////////////////////////////////////
-
           ++row;
           col=0;
           headPtr = addNode( headPtr, dataPtr );
@@ -182,7 +182,7 @@ int main(int argc, char **argv)
       //if set to 'File'
       if(log_to[0] != 'F')
       {
-        printf("Time:  %f, System Start\n", startTime);
+        printf("\nTime:  %f, System Start\n", startTime);
       }
       //if set to 'Monitor' or 'Both'
       else
@@ -204,12 +204,17 @@ int main(int argc, char **argv)
 /* /FCFS-N*////////////////////////////////////////////////////////////////////
       for(row = 0; row<ending_row; row++)
       {
+        //assign proc number to matrix
+    //    meta_data_matrix[row][col+3] = procIteration;
+        //assign process number
+    //    meta_data_matrix[row][3] == procIteration;
+
         //loop between 'A' start and 'A' end
         if(*meta_data_matrix[row][0] == 'A' && *meta_data_matrix[row][0] != 'M'
                           && *meta_data_matrix[row][1] == 's')
         {
           endTime = accessTimer(1,timeArray);
-          if(log_to[0] != 'F')
+          if(log_to[0] != 'F') //if logs to monitor or both
           {
             printf("Time:  %f, OS: FCFS-N Strategy selects Process %d "\
                             "with time: %s mSec\n", endTime, procIteration,
@@ -222,6 +227,7 @@ int main(int argc, char **argv)
                             "Process %d with time: %s mSec\n", endTime,
                             procIteration, processor_cycle_time);
           }
+
 
           endTime = accessTimer(1,timeArray);
           if(log_to[0] != 'F')
@@ -248,36 +254,40 @@ int main(int argc, char **argv)
           {
 //////////////MMU section//////////////////////////////////////////////////////
             //if equal to 'Memory'
+            //proc matrix column goes in order: M,
             if(*meta_data_matrix[row][0] == 'M')
             {
               //assign memory spot to array
-              current_mem = meta_data_matrix[row][2];
+
             }
 
             if(*meta_data_matrix[row][0] == 'M' && row != 0) //memory
             {
+              current_mem = meta_data_matrix[row][2];
+
               if(*log_to == 'M' || *log_to == 'B')
               {
                 if(log_to[0] != 'F')
                 {
-                  printf("Time:  %f, Process %d memory management allocate action"\
+                  printf("Time:  %f, Process %d memory management action"\
                               " start\n", endTime, procIteration);
 
                   endTime = accessTimer(1,timeArray);
+                  //starts the memory section
                   startMemProcess(log_to, available_memory, timeArray, endTime,
                                   procIteration, current_mem, log_file);
 
-
-                  printf("Time:  %f, Process %d memory management allocate action"\
+                  printf("Time:  %f, Process %d memory management action"\
                               " end\n", endTime, procIteration);
+
                 }
                 else
                 {
                   fprintf(log_file, "Time:  %f, Process %d "\
-                              "memory management allocate action start\n",
+                              "memory management action start\n",
                               endTime, procIteration);
                   fprintf(log_file, "Time:  %f, Process %d memory "\
-                              "management allocate action end\n",
+                              "management action end\n",
                               endTime, procIteration);
                 }
               }
@@ -346,9 +356,14 @@ int main(int argc, char **argv)
             fprintf(log_file, "Time:  %f, OS: Process %d Set in Exit "\
                             "State\n", endTime, procIteration);
           }
+          meta_data_matrix[row][3] = procIteration;
+          printf("Process %d start time: %f\n", procIteration, startTime);
+          printf("Process %d end time: %f\n", procIteration, endTime);
+          startTime = endTime;
           procIteration++;
         }
       }
+
       endTime = accessTimer(1,timeArray);
       if(log_to[0] != 'F')
       {
@@ -358,8 +373,9 @@ int main(int argc, char **argv)
       {
         fprintf(log_file, "Time:  %f, System Stop\n", endTime);
       }
+
       procIteration = 0; //reset iterator
-      printf("%s", file_out_array);
+      printf("%s\n", file_out_array);
 
       fclose(meta_data_file);
       fclose(log_file);
