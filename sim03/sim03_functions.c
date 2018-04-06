@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include "sim03_functions.h"
 
-
 int startMemProcess(char *log_to, char *available_memory, char *timeArray,
             double endTime, int procIteration, int current_mem, FILE *log_file)
 {

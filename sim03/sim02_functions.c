@@ -1,26 +1,31 @@
 #ifndef SIM02_FUNCTIONS_C
 #define SIM02_FUNCTIONS_C
 
-#include <stdio.h>
-#include <stdlib.h>
 #include "sim02_functions.h"
-#include "simtimer.h"
-#define word_size 50
-#include "pthread.h"
 
 //#include "simtimer.c"
-
 
 int threadID = 0;
 
 
-void addSubProc(int processNum)
+struct subProc createSubProc(int processNum, char letter, char string, char cycle_time)
+{
+  struct subProc subProc;
+  subProc.component_letter;
+  subProc.operation_string;
+  subProc.cycle_time;
+  return subProc;
+}
+
+struct process addProc(int processNum)
 {
   struct process proc;
+  proc.subProcID;
+  //proc.subProcArray;
   proc.processState = 'R'; //running
   proc.processNumber = processNum;
-  proc.subProcID = createSubProcID(processNum);
   proc = proc;
+  return proc;
 }
 
 
@@ -35,13 +40,6 @@ void createThread()
   pthread_t threadID;
   pthread_create(&threadID, NULL, *threadEnd, NULL);
   pthread_join(threadID, NULL);
-}
-
-
-int createSubProcID(int procIteration)
-{
-  int newID = procIteration + rand() %10000;
-  return newID;
 }
 
 
@@ -110,7 +108,7 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
     fprintf(log_file,"Time:  %f, Process %d %s %s ", endTime,
                     procIteration, location_var, type_var);
   }
-  addSubProc(procIteration);
+  //addProc(procIteration);
 }
 
 #endif // ifndef SIM02_FUNCTIONS_C

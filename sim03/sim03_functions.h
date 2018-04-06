@@ -1,6 +1,7 @@
 #ifndef SIM03_FUNCTIONS_H
 #define SIM03_FUNCTIONS_H
 
+#define GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>

@@ -6,7 +6,6 @@
 
 #include "linkedlist.h"
 #include "functions.h"
-#include "main.c"
 
 // gobal constants, including externally declared constants
 const int STD_STR_LEN = 60;

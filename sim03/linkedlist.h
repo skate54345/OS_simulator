@@ -6,6 +6,7 @@
 #define LINKED_LIST_H
 
 // header files
+#define GNU_SOURCE
 #include <stdio.h>  // I/O
 #include <stdlib.h>  // malloc
 #include <string.h>  // string management

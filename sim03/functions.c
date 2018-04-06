@@ -5,10 +5,12 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define GNU_SOURCE
 #include<stdio.h>
 #include<stdlib.h>
 
-#include"linkedlist.c"
+#include"linkedlist.h"
+#include"functions.h"
 
 void skipString(FILE *file, char array[], int times)
 {
@@ -40,7 +42,6 @@ void trim(char array[], int min, int max)
     array[iterator] = '\0';
   }
 }
-
 
 int compareStrings (const char *string1, const char *string2)
 {
@@ -177,6 +178,20 @@ int getConfig(FILE *config_file, char config_buffer[], char version[],
     cpu_scheduling_code[4] = '-';
     cpu_scheduling_code[5] = 'N';
     //"FCNF-N";
+  }
+  //check for SJF-N
+  else if(cpu_scheduling_code[0] == 'S' && cpu_scheduling_code[1] == 'J')
+  {
+    //clear array
+    for (iterator=0; iterator<10;iterator++)
+    {
+      cpu_scheduling_code[iterator] = '\0';
+    }
+    cpu_scheduling_code[0] = 'S';
+    cpu_scheduling_code[1] = 'J';
+    cpu_scheduling_code[2] = 'F';
+    cpu_scheduling_code[3] = '-';
+    cpu_scheduling_code[4] = 'N';
   }
   return error_code;
 }

@@ -1,19 +1,11 @@
 CC = gcc -pthread
-DEBUG = -g
-CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG)
-LFLAGS = -Wall -std=c99 -pedantic $(DEBUG)
+ARGS = -Wall -std=c99 -pedantic -c -g
+SOURCE = main.c functions.c sim02_functions.c sim03_functions.c linkedlist.c simtimer.c
 
-sim03 : main.o sim02_functions.o sim03_functions.o simtimer.o
-	$(CC) $(LFLAGS) main.o sim02_functions.o sim03_functions.o simtimer.o -o sim03
+all: compile
 
-sim02_functions.o : sim02_functions.c sim02_functions.h
-	$(CC) $(CFLAGS) sim02_functions.c
+compile:
+	$(CC) $(SOURCE) $(ARGS)
 
-sim03_functions.o : sim03_functions.c sim03_functions.h
-	$(CC) $(CFLAGS) sim03_functions.c
-
-main.o : main.c
-	$(CC) $(CFLAGS) main.c
-
-clean:
-	\rm *.o sim03
+debug: ARGS += -g
+debug: compile

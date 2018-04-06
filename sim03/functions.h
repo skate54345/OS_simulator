@@ -5,85 +5,19 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+#define GNU_SOURCE
 #include<stdio.h>
 #include<stdlib.h>
 
-#include"linkedlist.c"
+void skipString(FILE *file, char array[], int times);
 
-void skipString(FILE *file, char array[], int times)
-{
-  int iterator = 0;
-  while(iterator<times)
-  {
-    fscanf(file, "%s", array);
-    iterator++;
-  }
-}
+int stringToInt(char * input_string);
 
-int stringToInt(char * input_string)
-{
-  int iterator = 0;
-  int return_int = 0;
-  while(input_string[iterator] != '\0')
-  {
-    return_int = return_int*10 + input_string[iterator] - '0';
-    iterator++;
-  }
-  return return_int;
-}
+void trim(char array[], int min, int max);
 
-void trim(char array[], int min, int max)
-{
-  int iterator = 0;
-  for (iterator=min; iterator<max;iterator++)
-  {
-    array[iterator] = '\0';
-  }
-}
+int compareStrings (const char *string1, const char *string2);
 
-
-int compareStrings (const char *string1, const char *string2)
-{
-    const char *pointer1 = (const char *)string1;
-    const char *pointer2 = (const char *)string2;
-
-    while (*pointer1 != '\0')
-    {
-        if (*pointer2 == '\0')
-        {
-          return  1;
-        }
-        if (*pointer2 > *pointer1)
-        {
-          return -1;
-        }
-        if (*pointer1 > *pointer2)
-        {
-          return  1;
-        }
-        pointer1++;
-        pointer2++;
-    }
-
-    if (*pointer2 != '\0')
-    {
-      return -1;
-    }
-    return 0;
-}
-
-
-int rangeCheck (int test_number, int integer1, int integer2)
-{
-  if (test_number <= integer1 || test_number >= integer2)
-  {
-    return 0; //false
-  }
-  else
-  {
-    return 1; //true
-  }
-}
+int rangeCheck (int test_number, int integer1, int integer2);
 
 
 

@@ -1,6 +1,7 @@
 #ifndef MAIN_C
 #define MAIN_C
 
+#define GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
@@ -19,8 +20,6 @@ int main(int argc, char **argv)
   FILE *meta_data_file;
   FILE *log_file;
   char *meta_data_matrix[1000][1000]; //main matrix for meta data
-
-
   char version[20];
   char file_path[100];
   char cpu_scheduling_code[10];
@@ -34,13 +33,16 @@ int main(int argc, char **argv)
   int error_code = 0;
   int ending_row;
 
+  struct subProc sub_proc_array[100];
+  struct subProc current_sub_proc[100];
   char timeArray[20];
   double startTime;
   double endTime;
   int procIteration = 0;
+  int subProcIteration = 0;
   int total_time;
   int total_io_time;
-  //struct process firstProc;
+//  struct proc process_array[100];//array of proc (from A to A)
 
   struct NodeType *headPtr = NULL;
   // data node created, must be released
@@ -216,16 +218,16 @@ int main(int argc, char **argv)
           endTime = accessTimer(1,timeArray);
           if(log_to[0] != 'F') //if logs to monitor or both
           {
-            printf("Time:  %f, OS: FCFS-N Strategy selects Process %d "\
-                            "with time: %s mSec\n", endTime, procIteration,
-                            processor_cycle_time);
+            printf("Time:  %f, OS: %s Strategy selects Process %d "\
+                            "with time: %s mSec\n", endTime, cpu_scheduling_code,
+                            procIteration, processor_cycle_time);
           }
           else
           {
             //write to file
-            fprintf(log_file, "Time:  %f, OS: FCFS-N Strategy selects "\
+            fprintf(log_file, "Time:  %f, OS: %s Strategy selects "\
                             "Process %d with time: %s mSec\n", endTime,
-                            procIteration, processor_cycle_time);
+                            cpu_scheduling_code, procIteration, processor_cycle_time);
           }
 
 
@@ -276,7 +278,7 @@ int main(int argc, char **argv)
                   //starts the memory section
                   startMemProcess(log_to, available_memory, timeArray, endTime,
                                   procIteration, current_mem, log_file);
-
+                  endTime = accessTimer(1,timeArray); //stop timer
                   printf("Time:  %f, Process %d memory management action"\
                               " end\n", endTime, procIteration);
 
@@ -364,6 +366,10 @@ int main(int argc, char **argv)
         }
       }
 
+      sub_proc_array[subProcIteration] = createSubProc(procIteration,
+                    *meta_data_matrix[row][0], *meta_data_matrix[row][1],
+                    *meta_data_matrix[row][2]);
+
       endTime = accessTimer(1,timeArray);
       if(log_to[0] != 'F')
       {
@@ -374,9 +380,10 @@ int main(int argc, char **argv)
         fprintf(log_file, "Time:  %f, System Stop\n", endTime);
       }
 
+
+
       procIteration = 0; //reset iterator
       printf("%s\n", file_out_array);
-
       fclose(meta_data_file);
       fclose(log_file);
     }
