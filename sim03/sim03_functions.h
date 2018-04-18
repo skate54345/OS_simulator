@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pthread.h>
+#include "functions.h"
 
 
 int startMemProcess(char *log_to, char *available_memory, char *timeArray,

@@ -1,5 +1,5 @@
 CC = gcc -pthread
-ARGS = -Wall -std=c99 -pedantic -c -g
+ARGS = -Wall -std=c99 -pedantic -o sim03 -g
 SOURCE = main.c functions.c sim02_functions.c sim03_functions.c linkedlist.c simtimer.c
 
 all: compile

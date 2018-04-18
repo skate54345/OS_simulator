@@ -206,10 +206,8 @@ int main(int argc, char **argv)
 /* /FCFS-N*////////////////////////////////////////////////////////////////////
       for(row = 0; row<ending_row; row++)
       {
-        //assign proc number to matrix
-    //    meta_data_matrix[row][col+3] = procIteration;
-        //assign process number
-    //    meta_data_matrix[row][3] == procIteration;
+        //fflush(stdio);
+      //  printf("TEST!!!!!!!!!!!!!!!!!!!!\n");
 
         //loop between 'A' start and 'A' end
         if(*meta_data_matrix[row][0] == 'A' && *meta_data_matrix[row][0] != 'M'
@@ -257,15 +255,10 @@ int main(int argc, char **argv)
 //////////////MMU section//////////////////////////////////////////////////////
             //if equal to 'Memory'
             //proc matrix column goes in order: M,
-            if(*meta_data_matrix[row][0] == 'M')
-            {
-              //assign memory spot to array
-
-            }
 
             if(*meta_data_matrix[row][0] == 'M' && row != 0) //memory
             {
-              current_mem = meta_data_matrix[row][2];
+              current_mem = *meta_data_matrix[row][2];
 
               if(*log_to == 'M' || *log_to == 'B')
               {
@@ -341,12 +334,19 @@ int main(int argc, char **argv)
               fprintf(log_file,"end\n");
             }
           }
+
+          // //assign proc number to matrix
+          // meta_data_matrix[row][col+3] = procIteration;
+          // //assign process number
+          // meta_data_matrix[row][3] = procIteration;
+
         }
 
         //exit
         else if(*meta_data_matrix[row][0] == 'A' &&
                           *meta_data_matrix[row][1] == 'e')
         {
+
           endTime = accessTimer(1, timeArray);
           if(log_to[0] != 'F')
           {
@@ -358,17 +358,26 @@ int main(int argc, char **argv)
             fprintf(log_file, "Time:  %f, OS: Process %d Set in Exit "\
                             "State\n", endTime, procIteration);
           }
-          meta_data_matrix[row][3] = procIteration;
+
+//TODO DOESNT PRINT???????
+          // printf("AAAAAAAAAAAAAAAAAAAAAA:  %f, System Stop\n", endTime);
+          // sub_proc_array[subProcIteration] = createSubProc(procIteration,
+          //               *meta_data_matrix[row][0], *meta_data_matrix[row][1],
+          //               *meta_data_matrix[row][2]);
+          // printf("\n\nAAAAAAAAAA%d\n\n",sub_proc_array[subProcIteration].cycle_time);
+
+          //*meta_data_matrix[row][3] = procIteration;
           printf("Process %d start time: %f\n", procIteration, startTime);
           printf("Process %d end time: %f\n", procIteration, endTime);
+
+
+
           startTime = endTime;
           procIteration++;
         }
       }
 
-      sub_proc_array[subProcIteration] = createSubProc(procIteration,
-                    *meta_data_matrix[row][0], *meta_data_matrix[row][1],
-                    *meta_data_matrix[row][2]);
+//TODO PUT process HERE???
 
       endTime = accessTimer(1,timeArray);
       if(log_to[0] != 'F')
@@ -379,7 +388,6 @@ int main(int argc, char **argv)
       {
         fprintf(log_file, "Time:  %f, System Stop\n", endTime);
       }
-
 
 
       procIteration = 0; //reset iterator

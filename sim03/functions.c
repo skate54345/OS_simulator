@@ -22,7 +22,7 @@ void skipString(FILE *file, char array[], int times)
   }
 }
 
-int stringToInt(char * input_string)
+int stringToInt(char *input_string)
 {
   int iterator = 0;
   int return_int = 0;
@@ -197,13 +197,13 @@ int getConfig(FILE *config_file, char config_buffer[], char version[],
 }
 
 
-
 void getMetaData(FILE *meta_data_file)
 {
   char meta_data_buffer[ STD_STR_LEN ];
   //skip first line, store in buffer
   skipString(meta_data_file, meta_data_buffer, 4);
 }
+
 
 
 #endif   // FUNCTIONS_H
