@@ -14,13 +14,13 @@ int startMemProcess(char *log_to, char *available_memory, char *timeArray,
 
 //TODO put in struct if needed?
 
-  mem_seg = current_mem/1000000;
+  //mem_seg = current_mem/1000000;
   mem_base = (current_mem)/1000; //removes last digits
   mem_base = mem_base%1000; //removes first digits
   mem_alloc = (current_mem)%1000;
 
-  printf("Time:  %f, Process %d MMU Allocation: %d/%d/%d\n", endTime,
-         procIteration, mem_seg, mem_base, mem_alloc);
+  // printf("Time:  %f, Process %d MMU Allocation: %d/%d/%d\n", endTime,
+        // procIteration, mem_seg, mem_base, mem_alloc);
 
   // printf("%d\n", mem_seg);
   // printf("%d\n", mem_base);
