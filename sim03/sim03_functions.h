@@ -13,5 +13,4 @@ int startMemProcess(char *log_to, char *available_memory, char *timeArray,
 
 //int stringToInt(char * input_string);
 
-
 #endif   // SIM03_FUNCTIONS_H
