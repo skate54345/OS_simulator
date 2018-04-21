@@ -1,3 +1,5 @@
+/* Main acts as what would be the "run" file*/
+
 #ifndef MAIN_C
 #define MAIN_C
 
@@ -38,7 +40,7 @@ int main(int argc, char **argv)
   double startTime;
   double endTime;
   int procIteration = 0;
-  int MMUIteration = 0;
+  int PCBIteration = 0;
   int total_time;
   int total_io_time;
 //  struct proc process_array[100];//array of proc (from A to A)
@@ -151,9 +153,9 @@ int main(int argc, char **argv)
           //dump data
 
           //fill matrix with old linked list for easier use in sim02
-          meta_data_matrix[MMUIteration][row][col] = dataPtr->component_letter;
-          meta_data_matrix[MMUIteration][row][col+1] = dataPtr->operation_string;
-          meta_data_matrix[MMUIteration][row][col+2] = dataPtr->cycle_time;
+          meta_data_matrix[PCBIteration][row][col] = dataPtr->component_letter;
+          meta_data_matrix[PCBIteration][row][col+1] = dataPtr->operation_string;
+          meta_data_matrix[PCBIteration][row][col+2] = dataPtr->cycle_time;
           //printf(dataPtr->cycle_time[0];
           ending_row = row;
 
@@ -209,8 +211,8 @@ int main(int argc, char **argv)
       //  printf("TEST!!!!!!!!!!!!!!!!!!!!\n");
 
         //loop between 'A' start and 'A' end
-        if(*meta_data_matrix[MMUIteration][row][0] == 'A' && *meta_data_matrix[MMUIteration][row][0] != 'M'
-                          && *meta_data_matrix[MMUIteration][row][1] == 's')
+        if(*meta_data_matrix[PCBIteration][row][0] == 'A' && *meta_data_matrix[PCBIteration][row][0] != 'M'
+                          && *meta_data_matrix[PCBIteration][row][1] == 's')
         {
           endTime = accessTimer(1,timeArray);
           if(log_to[0] != 'F') //if logs to monitor or both
@@ -241,23 +243,23 @@ int main(int argc, char **argv)
           }
         }
 
-        else if(*meta_data_matrix[MMUIteration][row][0] != 'A' && row != 0)
+        else if(*meta_data_matrix[PCBIteration][row][0] != 'A' && row != 0)
         {
           //set time to required values
-          total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[MMUIteration][row][2]);
-          total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[MMUIteration][row][2]);
-          char location = *meta_data_matrix[MMUIteration][row][1];
-          char type = *meta_data_matrix[MMUIteration][row][0];
-          if (*meta_data_matrix[MMUIteration][row][0] != 'I'
-                            && *meta_data_matrix[MMUIteration][row][0] != 'O')
+          total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+          total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+          char location = *meta_data_matrix[PCBIteration][row][1];
+          char type = *meta_data_matrix[PCBIteration][row][0];
+          if (*meta_data_matrix[PCBIteration][row][0] != 'I'
+                            && *meta_data_matrix[PCBIteration][row][0] != 'O')
           {
 //////////////MMU section//////////////////////////////////////////////////////
             //if equal to 'Memory'
             //proc matrix column goes in order: M,
 
-            if(*meta_data_matrix[MMUIteration][row][0] == 'M' && row != 0) //memory
+            if(*meta_data_matrix[PCBIteration][row][0] == 'M' && row != 0) //memory
             {
-              current_mem = *meta_data_matrix[MMUIteration][row][2];
+              current_mem = *meta_data_matrix[PCBIteration][row][2];
 
               if(*log_to == 'M' || *log_to == 'B')
               {
@@ -342,8 +344,8 @@ int main(int argc, char **argv)
         }
 
         //exit
-        else if(*meta_data_matrix[MMUIteration][row][0] == 'A' &&
-                          *meta_data_matrix[MMUIteration][row][1] == 'e')
+        else if(*meta_data_matrix[PCBIteration][row][0] == 'A' &&
+                          *meta_data_matrix[PCBIteration][row][1] == 'e')
         {
 
           endTime = accessTimer(1, timeArray);
@@ -360,12 +362,12 @@ int main(int argc, char **argv)
 
           //the current subProc struct
           // sub_proc_array[procIteration] = createSubProc(procIteration,
-          //               *meta_data_matrix[MMUIteration][row][0], *meta_data_matrix[MMUIteration][row][1],
-          //               *meta_data_matrix[MMUIteration][row][2]);
+          //               *meta_data_matrix[PCBIteration][row][0], *meta_data_matrix[PCBIteration][row][1],
+          //               *meta_data_matrix[PCBIteration][row][2]);
 
-          printf("%s\n", meta_data_matrix[MMUIteration][0][0]);
-          printf("%s\n", meta_data_matrix[MMUIteration][0][1]);
-          printf("%s\n\n", meta_data_matrix[MMUIteration][0][2]);
+          printf("%s\n", meta_data_matrix[PCBIteration][0][0]);
+          printf("%s\n", meta_data_matrix[PCBIteration][0][1]);
+          printf("%s\n\n", meta_data_matrix[PCBIteration][0][2]);
 
           //printf("%s\n\n", meta_data_matrix[0][2][2]);
 
@@ -397,13 +399,13 @@ int main(int argc, char **argv)
 
           startTime = endTime;
           procIteration++;
-          MMUIteration++;
         }
       }
 
 //TODO PUT process HERE???
 
       endTime = accessTimer(1,timeArray);
+      PCBIteration++;
       if(log_to[0] != 'F')
       {
         printf("Time:  %f, System Stop\n", endTime);
