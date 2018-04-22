@@ -14,48 +14,19 @@ void SJFN(char *log_to, int PCBIteration, int row, int col,
 
 
 void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
-            double endTime, char log_to[10], char *meta_data_matrix[100][100][100])
+            double endTime, char log_to[10], char *cpu_scheduling_code[10],
+            char *processor_cycle_time[10], char *available_memory,
+            char *io_cycle_time, char *meta_data_matrix[100][100][100])
 {
-
-  printf("%f\n", endTime);
-
-  char config_buffer[10000]; //where new config data is stored
   char file_out_array[10000];
-  FILE *config_file;
-  FILE *meta_data_file;
-  //FILE *log_file;
-//  char *meta_data_matrix[10][100][100]; //main matrix for meta data
-  char version[20];
-  char file_path[100];
-  char cpu_scheduling_code[10];
-  char quantum_time[10];
-  char available_memory[100];
-  char processor_cycle_time[10];
-  char io_cycle_time[10];
-  //char log_to[10];
-  char log_file_path[100];
   int current_mem;
-  int error_code = 0;
-  //int ending_row;
-
   struct subProc sub_proc_array[100];
-//  char timeArray[20];
-  //double startTime;
-  //double endTime;
   int procIteration = 0;
   int PCBIteration = 0;
   int total_time;
   int total_io_time;
-//  struct proc process_array[100];//array of proc (from A to A)
-
-  struct NodeType *headPtr = NULL;
-  // data node created, must be released
-  struct NodeType *dataPtr
-                  = ( struct NodeType * )malloc( sizeof( struct NodeType ) );
-  char meta_data_buffer[ STD_STR_LEN ];
 
   int row = 0;
-  int col = 0;
 
 
   startTime = accessTimer(0,timeArray);//+endTime; //start
@@ -101,6 +72,8 @@ void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
             //set time to required values
             total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
             total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+          //  printf("\n\n%s\n", total_time);
+          //  printf("\n\n%s\n", total_io_time);
             char location = *meta_data_matrix[PCBIteration][row][1];
             char type = *meta_data_matrix[PCBIteration][row][0];
             if (*meta_data_matrix[PCBIteration][row][0] != 'I'
