@@ -15,8 +15,9 @@
 void SJFN(char *log_to, int PCBIteration, int row, int col,
             char *meta_data_matrix[100][100][100]);
 
-void run(FILE *log_file, int ending_row, char *timeArray,
-            char *meta_data_matrix[100][100][100]);
+void run(FILE *log_file, int ending_row, char *timeArray, double startTime, double endTime,
+            char *log_to, char *meta_data_matrix[100][100][100]);
+
 
 
 #endif   // SIM04_FUNCTIONS_H

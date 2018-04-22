@@ -13,8 +13,12 @@ void SJFN(char *log_to, int PCBIteration, int row, int col,
 }
 
 
-void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix[100][100][100])
+void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
+            double endTime, char log_to[10], char *meta_data_matrix[100][100][100])
 {
+
+  printf("%f\n", endTime);
+
   char config_buffer[10000]; //where new config data is stored
   char file_out_array[10000];
   FILE *config_file;
@@ -28,7 +32,7 @@ void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix
   char available_memory[100];
   char processor_cycle_time[10];
   char io_cycle_time[10];
-  char log_to[10];
+  //char log_to[10];
   char log_file_path[100];
   int current_mem;
   int error_code = 0;
@@ -36,8 +40,8 @@ void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix
 
   struct subProc sub_proc_array[100];
 //  char timeArray[20];
-  double startTime;
-  double endTime;
+  //double startTime;
+  //double endTime;
   int procIteration = 0;
   int PCBIteration = 0;
   int total_time;
@@ -52,6 +56,10 @@ void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix
 
   int row = 0;
   int col = 0;
+
+
+  startTime = accessTimer(0,timeArray);//+endTime; //start
+
   /* /FCFS-N*////////////////////////////////////////////////////////////////////
         for(row = 0; row<ending_row; row++)
         {
@@ -105,31 +113,28 @@ void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix
               {
                 current_mem = *meta_data_matrix[PCBIteration][row][2];
 
-                if(*log_to == 'M' || *log_to == 'B')
+                if(log_to[0] != 'F')
                 {
-                  if(log_to[0] != 'F')
-                  {
-                    printf("Time:  %f, Process %d memory management action"\
-                                " start\n", endTime, procIteration);
+                  printf("Time:  %f, Process %d memory management action"\
+                              " start\n", endTime, procIteration);
 
-                    endTime = accessTimer(1,timeArray);
-                    //starts the memory section
-                    startMemProcess(log_to, available_memory, timeArray, endTime,
-                                    procIteration, current_mem, log_file);
-                    endTime = accessTimer(1,timeArray); //stop timer
-                    printf("Time:  %f, Process %d memory management action"\
-                                " end\n", endTime, procIteration);
+                  endTime = accessTimer(1,timeArray);
+                  //starts the memory section
+                  startMemProcess(log_to, available_memory, timeArray, endTime,
+                                  procIteration, current_mem, log_file);
+                  endTime = accessTimer(1,timeArray); //stop timer
+                  printf("Time:  %f, Process %d memory management action"\
+                              " end\n", endTime, procIteration);
 
-                  }
-                  else
-                  {
-                    fprintf(log_file, "Time:  %f, Process %d "\
-                                "memory management action start\n",
-                                endTime, procIteration);
-                    fprintf(log_file, "Time:  %f, Process %d memory "\
-                                "management action end\n",
-                                endTime, procIteration);
-                  }
+                }
+                else
+                {
+                  fprintf(log_file, "Time:  %f, Process %d "\
+                              "memory management action start\n",
+                              endTime, procIteration);
+                  fprintf(log_file, "Time:  %f, Process %d memory "\
+                              "management action end\n",
+                              endTime, procIteration);
                 }
               }
               else
@@ -236,6 +241,7 @@ void run(FILE *log_file, int ending_row, char *timeArray, char *meta_data_matrix
         PCBIteration++;
         procIteration = 0; //reset iterator
 }
+
 
 
 
