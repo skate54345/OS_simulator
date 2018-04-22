@@ -14,13 +14,12 @@ void SJFN(char *log_to, int PCBIteration, int row, int col,
 
 
 void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
-            double endTime, char log_to[10], char *cpu_scheduling_code[10],
-            char *processor_cycle_time[10], char *available_memory,
+            double endTime, char *log_to, char *cpu_scheduling_code,
+            char *processor_cycle_time, char *available_memory,
             char *io_cycle_time, char *meta_data_matrix[100][100][100])
 {
   char file_out_array[10000];
   int current_mem;
-  struct subProc sub_proc_array[100];
   int procIteration = 0;
   int PCBIteration = 0;
   int total_time;
@@ -72,8 +71,6 @@ void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
             //set time to required values
             total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
             total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
-          //  printf("\n\n%s\n", total_time);
-          //  printf("\n\n%s\n", total_io_time);
             char location = *meta_data_matrix[PCBIteration][row][1];
             char type = *meta_data_matrix[PCBIteration][row][0];
             if (*meta_data_matrix[PCBIteration][row][0] != 'I'
