@@ -7,7 +7,7 @@
 int startMemProcess(char *log_to, char *available_memory, char *timeArray,
             double endTime, int procIteration, int current_mem, FILE *log_file)
 {
-  int mem_seg;
+  //int mem_seg;
   int mem_base;
   int mem_alloc;
   int mem_exit_code = 0;

@@ -7,24 +7,11 @@
 
 int threadID = 0;
 
-
-struct subProc createSubProc(int processNum, char letter, char string, char cycle_time)
-{
-  struct subProc subProc;
-  subProc.component_letter;
-  subProc.operation_string;
-  subProc.cycle_time;
-  return subProc;
-}
-
 struct process addProc(int processNum)
 {
   struct process proc;
-  proc.subProcID;
-  //proc.subProcArray;
   proc.processState = 'R'; //running
   proc.processNumber = processNum;
-  proc = proc;
   return proc;
 }
 
