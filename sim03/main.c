@@ -1,4 +1,4 @@
-/* Main acts as what would be the "run" file*/
+/* Main acts as what would be the "run" or "driver" file*/
 
 #ifndef MAIN_C
 #define MAIN_C
@@ -12,6 +12,7 @@
 #include "functions.h"
 #include "sim02_functions.h"
 #include "sim03_functions.h"
+#include "sim04_functions.h"
 
 
 int main(int argc, char **argv)
@@ -161,7 +162,8 @@ int main(int argc, char **argv)
 
 /* sim01 print statements ////////////////////////////////////////////////
           //dump
-          printf("The data item component letter is: %s\n",
+          printf("The data item component lett
+          er is: %s\n",
                                            dataPtr->component_letter);
           printf("The data item operation string is: %s\n",
                                            dataPtr->operation_string);
@@ -347,6 +349,12 @@ int main(int argc, char **argv)
         else if(*meta_data_matrix[PCBIteration][row][0] == 'A' &&
                           *meta_data_matrix[PCBIteration][row][1] == 'e')
         {
+          // printf("%s\n", meta_data_matrix[PCBIteration][0][0]);
+          // printf("%s\n", meta_data_matrix[PCBIteration][0][1]);
+          // printf("%s\n\n", meta_data_matrix[PCBIteration][0][2]);
+
+          printf("Process %d start time: %f\n", procIteration, startTime);
+          printf("Process %d end time: %f\n", procIteration, endTime);
 
           endTime = accessTimer(1, timeArray);
           if(log_to[0] != 'F')
@@ -360,47 +368,13 @@ int main(int argc, char **argv)
                             "State\n", endTime, procIteration);
           }
 
-          //the current subProc struct
-          // sub_proc_array[procIteration] = createSubProc(procIteration,
-          //               *meta_data_matrix[PCBIteration][row][0], *meta_data_matrix[PCBIteration][row][1],
-          //               *meta_data_matrix[PCBIteration][row][2]);
-
-          printf("%s\n", meta_data_matrix[PCBIteration][0][0]);
-          printf("%s\n", meta_data_matrix[PCBIteration][0][1]);
-          printf("%s\n\n", meta_data_matrix[PCBIteration][0][2]);
-
-          //printf("%s\n\n", meta_data_matrix[0][2][2]);
-
-//TODO
-//TODO
-//TODO
-//TODO
-//TODO
-          //add subProc to array of processes
-          //MMUArray[procIteration] = meta_data_matrix[procIteration];
-
-
-
-          //assign current subProcs values to ones from matrix
-        //  sub_proc_array[procIteration].component_letter = meta_data_matrix[row][0];
-        //  sub_proc_array[procIteration].operation_string = meta_data_matrix[row][1];
-        //  sub_proc_array[procIteration].cycle_time = meta_data_matrix[row][2];
-
-//TODO assign these earlier?
-          //printf("HERE%s\n", meta_data_matrix[0][1]);
-          //printf("\n%c\n", sub_proc_array[0].component_letter);
-          //printf("\n%c\n", sub_proc_array[0].operation_string);
-          //printf("\n%c\n", sub_proc_array[procIteration].cycle_time);
-
-          //*meta_data_matrix[row][3] = procIteration;
-          printf("Process %d start time: %f\n", procIteration, startTime);
-          printf("Process %d end time: %f\n", procIteration, endTime);
-
-
           startTime = endTime;
           procIteration++;
         }
       }
+
+      //HOW TO PASS TO FUNTION
+      //SJFN(log_to, PCBIteration, row, col, meta_data_matrix);
 
 //TODO PUT process HERE???
 

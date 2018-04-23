@@ -1,0 +1,63 @@
+Loop to end of the system data
+
+  - get the correct process
+
+  - get the correct op code
+
+  - test mode
+
+     - check for 'I'
+
+         - load timer with the data
+	   - and call it
+
+         - set my process to blocked
+
+         - call output operation
+
+     - check for 'O'
+
+         - load timer with the data
+	   - and call it
+
+         - set my process to blocked
+
+         - call output operation
+
+     - check for 'M'  // if
+
+         - running MMU
+
+         - potential seg fault of process
+
+     - check for 'P'
+
+         - calculate one cycle
+
+         - call output operation (running)
+
+         - loop up to num cycles or quantum 
+           (one cycle at a time)
+
+           - timer
+
+           - check for interrupt
+
+         - if interrupt, then move context back process manager
+
+            - call output operation (interrupt)
+
+         - else
+
+            - report end quantum or end run cycles
+
+
+     check for interrupt(s), resolve
+
+  - end master loop
+
+
+TIMER:
+
+   - time
+   - process #, desc text

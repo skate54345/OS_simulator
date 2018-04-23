@@ -1,14 +1,12 @@
+#ifndef SIM02_FUNCTIONS_C
+#define SIM02_FUNCTIONS_C
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "sim02_functions.h"
 #include "simtimer.h"
-#define word_size 50
 #include "pthread.h"
-
-//#include "simtimer.c"
-#ifndef SIM02_FUNCTIONS_C
-#define SIM02_FUNCTIONS_C
-
+#define word_size 50
 
 int threadID = 0;
 
@@ -111,5 +109,20 @@ void startIOProcess(char *io_cycle_time, char *log_to, char location, char type,
   }
   addSubProc(procIteration);
 }
+
+
+int stringToInt2(char * input_string)
+{
+  int iterator = 0;
+  int return_int = 0;
+  while(input_string[iterator] != '\0')
+  {
+    return_int = return_int*10 + input_string[iterator] - '0';
+    iterator++;
+  }
+  return return_int;
+}
+
+
 
 #endif // ifndef SIM02_FUNCTIONS_C

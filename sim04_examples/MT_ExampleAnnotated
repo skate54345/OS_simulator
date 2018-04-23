@@ -1,0 +1,97 @@
+
+Operating System Simulator
+==========================
+
+Loading configuration file
+Loading meta-data file
+
+==========================
+Begin Simulation
+
+Time:  0.000000, System start
+Time:  0.000007, OS: Begin PCB Creation
+Time:  0.000017, OS: All processes initialized in New state
+Time:  0.000032, OS: All processes now set in Ready state
+
+Time:  0.000053, OS: FCFS-P selects Process 0 with time: 1008
+Time:  0.000077, OS: Process 0 set in Running state
+Time:  0.000102, Process 0, hard drive Input start {8 cycles * .05}
+Time:  0.000125, OS: Process 0 set in Blocked state
+
+Time:  0.000157, OS: FCFS-P selects Process 1 with time: 9420
+Time:  0.000162, OS: Process 1 set in Running state
+Time:  0.000200, Process 1, hard drive Output start {7 cycles * .05}
+Time:  0.000221, OS: Process 1 set in Blocked state
+
+Time:  0.000289, OS: FCFS-P selects Process 2 with time: 8880
+Time:  0.000299, OS: Process 2 set in Running state
+Time:  0.000315, Process 2, keyboard Input start {10 cycles * .05}
+Time:  0.000330, OS: Process 2 set in Blocked state
+
+Time:  0.000384, OS: FCFS-P selects Process 3 with time: 7280
+Time:  0.000388, OS: Process 3 set in Running state
+Time:  0.000402, Process 3, Run operation start {11 cycles * .01}
+Time:  0.039510, OS: Process 3 quantum time out {3 cycles completed}
+
+Time:  0.0395527, OS: FCFS-P selects Process 4 with time: 6920
+Time:  0.039545, OS: Process 4 set in Running state
+Time:  0.039566, Process 4, hard drive Output start {6 cycles * .05}
+Time:  0.039582, OS: Process 4 set in Blocked state
+
+Time:  0.039599, OS: FCFS-P selects Process 3 with time: 6980
+Time:  0.039617, OS: Process 3 set in Running state
+Time:  0.039629, Process 3, Run operation start {8 cycles * .01}
+Time:  0.078055, OS: Process 3 quantum time out {3 cycles completed}
+
+Time:  0.078082, OS: FCFS-P selects Process 3 with time: 6680
+Time:  0.078101, OS: Process 3 set in Running state
+Time:  0.078119, Process 3, Run operation start {5 cycles * .01}
+Time:  0.110757, OS: Process 3 quantum time out {3 cycles completed}
+Time:  0.110762, OS: Process 3 set in Ready state
+
+Time:  0.110787, OS: FCFS-P selects Process 3 with time: 6380
+Time:  0.110798, OS: Process 3 set in Running state
+Time:  0.110818, Process 3, Run operation start {2 cycles * .01}
+Time:  0.137716, Process 3, Run operation end {2 cycles completed}
+Time:  0.137731, Process 3, monitor output start {8 cycles * .05}
+Time:  0.137750, OS: Process 3 set in Blocked state
+
+Time:  0.137759, OS: CPU Idle
+Time:  0.298664, OS: Interrupt, Process 4
+Time:  0.353481, Process 4, hard drive Output end {I/O ended}
+Time:  0.353491, OS: Process 4 set in Ready state
+
+Time:  0.353505, OS: FCFS-P selects Process 4 with time: 6895
+Time:  0.353511, OS: Process 4 set in Running state
+Time:  0.353525, Process 4, Run operation start {5 cycles * .01}
+Time:  0.546729, OS: Interrupt, Process 0 {1 cycle completed}
+Time:  0.546750, OS: Process 4 set in Ready state
+Time:  0.546762, Process 0, hard drive Input end {I/O ended}
+Time:  0.546777, OS: Process 0 set in Ready state
+Time:  0.546792, OS: Interrupt, Process 1
+Time:  0.546811, Process 1, hard drive Output end {I/O ended}
+Time:  0.546830, OS: Process 1 set in Ready state
+Time:  0.546854, OS: Interrupt, Process 3
+Time:  0.546887, Process 3, monitor output end {I/O ended}
+Time:  0.546902, OS: Process 3 set in Ready state
+
+Time:  0.546915, OS: FCFS-P selects Process 0 with time: 658
+Time:  0.546932, OS: Process 0 set in Running state 
+Time:  0.546955, Process 3, Run operation start {4 cycles * .01}
+Time:  0.559097, OS: Interrupt, Process 2 {1 cycle completed}
+Time:  0.559121, OS: Process 3 set in Ready state
+Time:  0.559139, Process 2, keyboard input end {I/O completed}
+Time:  0.559161, OS: Process 2 set in Ready state
+
+Time:  0.559178, OS: FCFS-P selects Process 0 with time: 648
+Time:  0.559196, OS: Process 0 set in Running state 
+Time:  0.559221, Process 0, Run operation start {3 cycles * .01}
+Time:  0.593557, Process 0 quantum time out {3 cycles completed}
+     .
+     .
+     .
+Time: 1.654672, System Stop
+
+End Simulation - Complete
+==========================
+

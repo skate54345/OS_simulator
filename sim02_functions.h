@@ -38,5 +38,10 @@ int createSubProcID(int procIteration);
 
 void returnTimer();
 
+void FCFS(int row, int col, int ending_row, char *meta_data_matrix[row][col],
+                  double endTime, char *timeArray, char *log_to,
+                  int procIteration, char *processor_cycle_time, FILE *log_file,
+                  int total_time, int total_io_time, char *io_cycle_time);
+
 
 #endif // ifndef SIM02_FUNCTIONS_H

@@ -1,0 +1,25 @@
+CC = gcc
+DEBUG = -g
+CFLAGS = -Wall -std=c99 -pedantic -c $(DEBUG) -pthread
+LFLAGS = -Wall -std=c99 -pedantic $(DEBUG) -pthread
+
+sim03 : mainfile.o stringfunctions.o util_functions.o runsimulation.o
+	$(CC) $(LFLAGS) mainfile.o stringfunctions.o util_functions.o runsimulation.o -o sim03
+
+mainfile.o : mainfile.c
+	$(CC) $(CFLAGS) mainfile.c
+
+stringfunctions.o : stringfunctions.c stringfunctions.h
+	$(CC) $(CFLAGS) stringfunctions.c
+
+util_functions.o : util_functions.c util_functions.h
+	$(CC) $(CFLAGS) util_functions.c
+
+runsimulation.o : runsimulation.c runsimulation.h
+	$(CC) $(CFLAGS) runsimulation.c
+
+
+
+clean:
+	\rm *.o sim03
+

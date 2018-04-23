@@ -19,6 +19,8 @@ int startMemProcess(char *log_to, char *available_memory, char *timeArray,
   mem_base = mem_base%1000; //removes first digits
   mem_alloc = (current_mem)%1000;
 
+//sim03 stuff
+
   // printf("Time:  %f, Process %d MMU Allocation: %d/%d/%d\n", endTime,
         // procIteration, mem_seg, mem_base, mem_alloc);
 
