@@ -144,6 +144,7 @@ int main(int argc, char **argv)
           meta_data_matrix[PCBIteration][row][col] = dataPtr->component_letter;
           meta_data_matrix[PCBIteration][row][col+1] = dataPtr->operation_string;
           meta_data_matrix[PCBIteration][row][col+2] = dataPtr->cycle_time;
+          meta_data_matrix[PCBIteration][row][col+3] = "W"; //waiting
           ending_row = row;
 
 /* sim01 print statements ////////////////////////////////////////////////
@@ -157,6 +158,8 @@ int main(int argc, char **argv)
                                            dataPtr->cycle_time);
 */ ///////////////////////////////////////////////////////////////////////
 
+
+
           ++row;
           col=0;
           headPtr = addNode( headPtr, dataPtr );
@@ -165,8 +168,32 @@ int main(int argc, char **argv)
           fgetc(meta_data_file);
         }
 
+/* SIM04 start (after refactoring)*////////////////////////////////////////////////////////////////
 
-/* /SIM02 START (now in "run")*//////////////////////////////////////////////////////////
+
+//TODO get correct process
+//TODO print stuff at the very end, use sprintf to assign a massive string array
+//TODO
+
+      //check for FCFS for old implementation
+      if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
+                               cpu_scheduling_code[5]=='N')
+      {
+        FCFSN(log_file, ending_row, timeArray, startTime, endTime, log_to, cpu_scheduling_code,
+                        processor_cycle_time, available_memory, io_cycle_time,
+                        quantum_time, meta_data_matrix);
+      }
+
+      else if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
+                               cpu_scheduling_code[5]=='P')
+      {
+        printf("works\n");
+      }
+
+
+//start of loop
+      // int total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+      // int total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
 
       log_file = fopen(log_file_path,"w+");
       //get ZERO_TIMER
@@ -193,10 +220,16 @@ int main(int argc, char **argv)
         fprintf(log_file, "Time:  %f, OS: Begin PCB Creation\n", endTime);
       }
 
-      run(log_file, ending_row, timeArray, startTime, endTime, log_to, cpu_scheduling_code,
-                      processor_cycle_time, available_memory, io_cycle_time,
-                      quantum_time, meta_data_matrix);
-
+      // for(row=0; row<ending_row; row++)
+      // {
+      //   /* /SIM02 START (FCFS now in "run")*//////////////////////////////////////
+      //   //check for I
+      //   if(*meta_data_matrix[PCBIteration][row][0] == 'I' && row != 0)
+      //   {
+      //
+      //   }
+      //
+      // }
 
       fclose(meta_data_file);
       fclose(log_file);

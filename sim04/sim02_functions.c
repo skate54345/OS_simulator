@@ -10,7 +10,7 @@ int threadID = 0;
 struct process addProc(int processNum)
 {
   struct process proc;
-  proc.processState = 'R'; //running
+  proc.processState = 'W'; //Waiting
   proc.processNumber = processNum;
   return proc;
 }

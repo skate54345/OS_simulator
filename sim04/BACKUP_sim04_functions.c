@@ -5,27 +5,13 @@
 #include "sim04_functions.h"
 
 //shortest job first non-preemptive
-// void SJFN(char *log_to, int PCBIteration, int row, int col,
-//             char *meta_data_matrix[100][100][100])
-// {
-//   //printf("\n\n%s\n\n", meta_data_matrix[0][1][0]);
-// }
+void SJFN(char *log_to, int PCBIteration, int row, int col,
+            char *meta_data_matrix[100][100][100])
+{
+  //printf("\n\n%s\n\n", meta_data_matrix[0][1][0]);
+}
 
-
-// int checkFCFSN(char *cpu_scheduling_code)
-// {
-//   int isFCFSN = 0;
-//   if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
-//                         cpu_scheduling_code[5]=='N')
-//   {
-//     isFCFSN = 1;
-//   }
-//   return isFCFSN;
-// }
-
-
-//original implementation
-void FCFSN(FILE *log_file, int ending_row, char *timeArray, double startTime,
+void run(FILE *log_file, int ending_row, char *timeArray, double startTime,
             double endTime, char *log_to, char *cpu_scheduling_code,
             char *processor_cycle_time, char *available_memory,
             char *io_cycle_time, char *quantum_time,
