@@ -16,10 +16,11 @@
 int main(int argc, char **argv)
 {
   char config_buffer[10000]; //where new config data is stored
+  char string_buffer[100]; //where print output is stored
   FILE *config_file;
   FILE *meta_data_file;
   FILE *log_file;
-  char *meta_data_matrix[10][100][100]; //main matrix for meta data
+  char *meta_data_matrix[100][100][100]; //main matrix for meta data
   char version[20];
   char file_path[100];
   char cpu_scheduling_code[10];
@@ -144,7 +145,7 @@ int main(int argc, char **argv)
           meta_data_matrix[PCBIteration][row][col] = dataPtr->component_letter;
           meta_data_matrix[PCBIteration][row][col+1] = dataPtr->operation_string;
           meta_data_matrix[PCBIteration][row][col+2] = dataPtr->cycle_time;
-          meta_data_matrix[PCBIteration][row][col+3] = "W"; //waiting
+          meta_data_matrix[PCBIteration][row][col+3] = "N"; //set to new state
           ending_row = row;
 
 /* sim01 print statements ////////////////////////////////////////////////
@@ -157,8 +158,6 @@ int main(int argc, char **argv)
           printf("The data item cycle time is      : %s\n",
                                            dataPtr->cycle_time);
 */ ///////////////////////////////////////////////////////////////////////
-
-
 
           ++row;
           col=0;
@@ -176,28 +175,22 @@ int main(int argc, char **argv)
 //TODO
 
       //check for FCFS for old implementation
-      if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
-                               cpu_scheduling_code[5]=='N')
+      if(checkFCFSN(cpu_scheduling_code)==1)
       {
         FCFSN(log_file, ending_row, timeArray, startTime, endTime, log_to, cpu_scheduling_code,
                         processor_cycle_time, available_memory, io_cycle_time,
-                        quantum_time, meta_data_matrix);
+                        quantum_time, log_file_path, meta_data_matrix);
       }
-
-      else if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
-                               cpu_scheduling_code[5]=='P')
+      else
       {
-        printf("works\n");
-      }
 
 
 //start of loop
-      // int total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
-      // int total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
 
+      //int total_time = stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+      //int total_io_time = stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
       log_file = fopen(log_file_path,"w+");
-      //get ZERO_TIMER
-      startTime = accessTimer(0,timeArray); //start
+      startTime = accessTimer(0,timeArray); //start clock
       //if set to 'File'
       if(log_to[0] != 'F')
       {
@@ -220,20 +213,78 @@ int main(int argc, char **argv)
         fprintf(log_file, "Time:  %f, OS: Begin PCB Creation\n", endTime);
       }
 
-      // for(row=0; row<ending_row; row++)
-      // {
-      //   /* /SIM02 START (FCFS now in "run")*//////////////////////////////////////
-      //   //check for I
-      //   if(*meta_data_matrix[PCBIteration][row][0] == 'I' && row != 0)
-      //   {
-      //
-      //   }
-      //
-      // }
+
+///////FCFSP
+      //if(checkFCFSN(cpu_scheduling_code==1))
+      //{
+        //TODO CHECK FOR SCHEDULING CODE WITHIN EACH LETTER
+
+        int running = 0;
+        int new_quantum = stringToInt(quantum_time);
+        for(row=0; row<ending_row; row++)
+        {
+
+          int total_time = 0; //stringToInt(processor_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+          int total_io_time = 0; //stringToInt(io_cycle_time)*(*meta_data_matrix[PCBIteration][row][2]);
+          char location = *meta_data_matrix[PCBIteration][row][1];
+          char type = *meta_data_matrix[PCBIteration][row][0];
+
+            //check for IO process
+            if((*meta_data_matrix[PCBIteration][row][0] == 'I' && row != 0) ||
+                                (*meta_data_matrix[PCBIteration][row][0] == 'O'
+                                && row != 0))
+            {
+              //TODO load timer with the data and call it
+
+              //set to blocked
+              meta_data_matrix[PCBIteration][row][3] = "B";
+
+              startIOProcess(io_cycle_time, log_to, location, type, total_io_time,
+                                timeArray, endTime, PCBIteration, log_file);
+              char start[20] = {'s','t','a','r','t','\0'};
+              start[20] = start[20];
+
+              printf("start\0\n");
+
+              runTimer(total_io_time);
+              createThread();
+              startIOProcess(io_cycle_time, log_to, location, type, total_io_time,
+                                timeArray, endTime, PCBIteration, log_file);
+
+              endTime = accessTimer(1,timeArray);
+
+            }
+            else if(*meta_data_matrix[PCBIteration][row][0] == 'M' && row != 0)
+            {
+              //TODO running MMU
+
+              //TODO potential seg fault of process
+            }
+            else if(*meta_data_matrix[PCBIteration][row][0] == 'A' && row != 0)
+            {
+              //quantum_time--;
+              //TODO loop up to num cycles or quantum (one cycle at a time)
+
+              //TODO timer
+
+              //TODO check for interrupt
+
+              //TODO interrupt, then move context back process manager
+
+              //TODO call output operation (interrupt)
+            }
+            startTime = endTime;
+            PCBIteration++;
+            PCBIteration = 0;
+
+            running = 0;
+
+        }
 
       fclose(meta_data_file);
       fclose(log_file);
      }
+   }
 }
 
 #endif // MAIN_C

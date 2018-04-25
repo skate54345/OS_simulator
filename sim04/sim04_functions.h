@@ -12,17 +12,15 @@
 #include "sim03_functions.h"
 
 
-// void SJFN(int PCBIteration, int row, int col,
-//             char *meta_data_matrix[100][100][100]);
-//
-//
-// void FCFSP(int PCBIteration, int row, int col,
-//             char *meta_data_matrix[100][100][100]);
+int checkFCFSN(char *cpu_scheduling_code);
+
+int checkFCFSP(char *cpu_scheduling_code);
+
 
 void FCFSN(FILE *log_file, int ending_row, char *timeArray, double startTime,
             double endTime, char *log_to, char *cpu_scheduling_code,
             char *processor_cycle_time, char *available_memory,
-            char *io_cycle_time, char *quantum_time,
+            char *io_cycle_time, char *quantum_time, char *log_file_path,
             char *meta_data_matrix[100][100][100]);
 
 

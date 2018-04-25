@@ -1,0 +1,133 @@
+Time:  0.000004, OS: FCFS-N Strategy selects Process 0 with time: 480 mSec
+Time:  0.000055, OS: Process 0 Set in Running State
+Time:  0.000055, Process 0 memory management action start
+Time:  0.000104, Process 0 MMU Allocation: Success
+Time:  0.000136, Process 0 memory management action end
+Time:  0.000159, Process 0 hard drive input start
+Time:  1.020361, Process 0 hard drive input end
+Time:  1.020397, Process 0 hard drive output start
+Time:  2.020538, Process 0 hard drive output end
+Time:  2.020578, Process 0 keyboard input start
+Time:  3.140708, Process 0 keyboard input end
+Time:  3.140745, Process 0 hard drive input start
+Time:  4.120891, Process 0 hard drive input end
+Time:  4.120929, Process 0 hard drive output start
+Time:  5.141065, Process 0 hard drive output end
+Time:  5.141103, Process 0 hard drive output start
+Time:  6.161229, Process 0 hard drive output end
+Time:  6.161267, Process 0 printer output start
+Time:  7.201394, Process 0 printer output end
+Time:  7.201430, Process 0 keyboard input start
+Time:  8.181552, Process 0 keyboard input end
+Time:  8.181590, Process 0 keyboard input start
+Time:  9.161718, Process 0 keyboard input end
+Time:  9.161753, Process 0 keyboard input start
+Time:  10.221877, Process 0 keyboard input end
+Process 0 start time: 0.000000
+Process 0 end time: 10.221915
+Time:  10.221936, OS: Process 0 Set in Exit State
+Time:  10.221947, OS: FCFS-N Strategy selects Process 1 with time: 530 mSec
+Time:  10.221957, OS: Process 1 Set in Running State
+Time:  10.221967, Process 1 hard drive input start
+Time:  11.222098, Process 1 hard drive input end
+Time:  11.222138, Process 1 hard drive input start
+Time:  12.262268, Process 1 hard drive input end
+Time:  12.262307, Process 1 monitor output start
+Time:  13.242432, Process 1 monitor output end
+Time:  13.772473, Process 1 run operation start
+Time:  13.772473, Process 1 run operation end
+Time:  14.332521, Process 1 run operation start
+Time:  14.332521, Process 1 run operation end
+Time:  14.332569, Process 1 hard drive input start
+Time:  15.352692, Process 1 hard drive input end
+Time:  15.352731, Process 1 hard drive input start
+Time:  16.332850, Process 1 hard drive input end
+Time:  16.332889, Process 1 printer output start
+Time:  17.413021, Process 1 printer output end
+Time:  17.413056, Process 1 keyboard input start
+Time:  18.473183, Process 1 keyboard input end
+Time:  18.963223, Process 1 run operation start
+Time:  18.963223, Process 1 run operation end
+Process 1 start time: 10.221936
+Process 1 end time: 18.963223
+Time:  18.963274, OS: Process 1 Set in Exit State
+Time:  18.963290, OS: FCFS-N Strategy selects Process 2 with time: 490 mSec
+Time:  18.963304, OS: Process 2 Set in Running State
+Time:  18.963304, Process 2 memory management action start
+Time:  18.963321, Process 2 MMU Allocation: Success
+Time:  18.963332, Process 2 memory management action end
+Time:  18.963345, Process 2 printer output start
+Time:  20.003560, Process 2 printer output end
+Time:  20.003604, Process 2 printer output start
+Time:  21.063733, Process 2 printer output end
+Time:  21.063769, Process 2 hard drive input start
+Time:  22.063907, Process 2 hard drive input end
+Time:  22.063950, Process 2 hard drive output start
+Time:  23.104074, Process 2 hard drive output end
+Time:  23.104111, Process 2 printer output start
+Time:  24.164237, Process 2 printer output end
+Time:  24.654298, Process 2 run operation start
+Time:  24.654298, Process 2 run operation end
+Time:  25.214342, Process 2 run operation start
+Time:  25.214342, Process 2 run operation end
+Time:  25.214385, Process 2 keyboard input start
+Time:  26.194531, Process 2 keyboard input end
+Time:  26.194571, Process 2 keyboard input start
+Time:  27.174699, Process 2 keyboard input end
+Time:  27.174739, Process 2 hard drive input start
+Time:  28.214845, Process 2 hard drive input end
+Process 2 start time: 18.963274
+Process 2 end time: 28.214882
+Time:  28.214896, OS: Process 2 Set in Exit State
+Time:  28.214904, OS: FCFS-N Strategy selects Process 3 with time: 520 mSec
+Time:  28.214927, OS: Process 3 Set in Running State
+Time:  28.704950, Process 3 run operation start
+Time:  28.704950, Process 3 run operation end
+Time:  29.274995, Process 3 run operation start
+Time:  29.274995, Process 3 run operation end
+Time:  29.275037, Process 3 printer output start
+Time:  30.295164, Process 3 printer output end
+Time:  30.295201, Process 3 hard drive input start
+Time:  31.315323, Process 3 hard drive input end
+Time:  31.315358, Process 3 hard drive output start
+Time:  32.315488, Process 3 hard drive output end
+Time:  32.315538, Process 3 keyboard input start
+Time:  33.375665, Process 3 keyboard input end
+Time:  33.865704, Process 3 run operation start
+Time:  33.865704, Process 3 run operation end
+Time:  33.865747, Process 3 hard drive output start
+Time:  34.845872, Process 3 hard drive output end
+Time:  35.415911, Process 3 run operation start
+Time:  35.415911, Process 3 run operation end
+Time:  35.415951, Process 3 hard drive input start
+Time:  36.436090, Process 3 hard drive input end
+Process 3 start time: 28.214896
+Process 3 end time: 36.436129
+Time:  36.436143, OS: Process 3 Set in Exit State
+Time:  36.436149, OS: FCFS-N Strategy selects Process 4 with time: 510 mSec
+Time:  36.436165, OS: Process 4 Set in Running State
+Time:  36.436180, Process 4 hard drive output start
+Time:  37.436311, Process 4 hard drive output end
+Time:  37.436350, Process 4 printer output start
+Time:  38.496480, Process 4 printer output end
+Time:  38.986519, Process 4 run operation start
+Time:  38.986519, Process 4 run operation end
+Time:  39.556563, Process 4 run operation start
+Time:  39.556563, Process 4 run operation end
+Time:  39.556606, Process 4 hard drive input start
+Time:  40.536730, Process 4 hard drive input end
+Time:  41.026770, Process 4 run operation start
+Time:  41.026770, Process 4 run operation end
+Time:  41.026812, Process 4 printer output start
+Time:  42.086942, Process 4 printer output end
+Time:  42.086981, Process 4 hard drive output start
+Time:  43.087108, Process 4 hard drive output end
+Time:  43.087147, Process 4 hard drive input start
+Time:  44.087275, Process 4 hard drive input end
+Time:  44.617316, Process 4 run operation start
+Time:  44.617316, Process 4 run operation end
+Process 4 start time: 36.436143
+Process 4 end time: 44.617316
+Time:  44.617367, OS: Process 4 Set in Exit State
+start
+Time:  44.617382, System Stop

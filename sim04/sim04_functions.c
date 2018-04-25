@@ -1,10 +1,51 @@
 #ifndef SIM04_FUNCTIONS_C
 #define SIM04_FUNCTIONS_C
 
-
 #include "sim04_functions.h"
 
-//shortest job first non-preemptive
+
+char interrupt(int process_num)
+{
+  char return_string[20];
+  sprintf(return_string, "Interrupt: Process %d\n", process_num);
+  return *return_string;
+}
+
+int checkFCFSN(char *cpu_scheduling_code)
+{
+  int isFCFSN = 0;
+  if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
+                        cpu_scheduling_code[5]=='N')
+  {
+    isFCFSN = 1;
+  }
+  return isFCFSN;
+}
+
+int checkFCFSP(char *cpu_scheduling_code)
+{
+  int isFCFSP = 0;
+  if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
+                        cpu_scheduling_code[5]=='P')
+  {
+    isFCFSP = 1;
+  }
+  return isFCFSP;
+}
+
+int checkRRP(char *cpu_scheduling_code)
+{
+  int isRRP = 0;
+  if(cpu_scheduling_code[0]=='R' && cpu_scheduling_code[1]=='R' &&
+                        cpu_scheduling_code[3]=='P')
+  {
+    isRRP = 1;
+  }
+  return isRRP;
+}
+
+
+
 // void SJFN(char *log_to, int PCBIteration, int row, int col,
 //             char *meta_data_matrix[100][100][100])
 // {
@@ -12,27 +53,15 @@
 // }
 
 
-// int checkFCFSN(char *cpu_scheduling_code)
-// {
-//   int isFCFSN = 0;
-//   if(cpu_scheduling_code[0]=='F' && cpu_scheduling_code[2]=='F' &&
-//                         cpu_scheduling_code[5]=='N')
-//   {
-//     isFCFSN = 1;
-//   }
-//   return isFCFSN;
-// }
-
 
 //original implementation
 void FCFSN(FILE *log_file, int ending_row, char *timeArray, double startTime,
             double endTime, char *log_to, char *cpu_scheduling_code,
             char *processor_cycle_time, char *available_memory,
-            char *io_cycle_time, char *quantum_time,
+            char *io_cycle_time, char *quantum_time, char *log_file_path,
             char *meta_data_matrix[100][100][100])
 {
   char file_out_array[10000];
-  char string_buffer[100];
   int current_mem;
   int procIteration = 0;
   int PCBIteration = 0;
@@ -41,7 +70,6 @@ void FCFSN(FILE *log_file, int ending_row, char *timeArray, double startTime,
   int row = 0;
 
   printf("Quantum time:   %s\n", quantum_time);
-
 
   startTime = accessTimer(0,timeArray);//+endTime; //start
   /* /FCFS-N*////////////////////////////////////////////////////////////////////
@@ -214,7 +242,6 @@ void FCFSN(FILE *log_file, int ending_row, char *timeArray, double startTime,
         procIteration = 0; //reset iterator
         printf("%s\n", file_out_array);
         //fclose(meta_data_file);
-        //fclose(log_file);
 
 
         endTime = accessTimer(1,timeArray);
